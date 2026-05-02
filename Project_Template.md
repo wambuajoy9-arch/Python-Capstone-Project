@@ -8,6 +8,9 @@
 > Tell your audience how you got the answer,  tools show your capability
 > Dive deep in this in your technical  article
 - Python
+- pandas
+- Vsc
+
 
 3. What insights did you or do you want to discover?/ What Solutions do you want to offer? Do People even need these solutions?
 > Don’t just say “dashboard done.”
