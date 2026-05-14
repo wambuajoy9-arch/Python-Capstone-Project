@@ -1,4 +1,5 @@
 import pandas as pd 
+import streamlit as st
 # Load the data
 data = pd.read_csv("Cleaned_Data.csv")
 data["date"] = pd.to_datetime(data["date"], errors="coerce")
@@ -14,7 +15,7 @@ average_price_per_year = data.groupby(["Year","commodity"])["price"].mean().rese
 # Filter one commodity, predictictions are usually done per commodity
 # Show the available commodities
 commodity = average_price_per_year['commodity'].unique()
-selected_commodity = st.sidebar.selectbox("Select Commodity", available_commodities)
+selected_commodity = st.sidebar.selectbox("Select Commodity", commodities)
 #Filter the data of the selected commodity
 data = average_price_per_year[average_price_per_year["commodity"] == selected_commodity]
 # Calculating the Growth Rate
