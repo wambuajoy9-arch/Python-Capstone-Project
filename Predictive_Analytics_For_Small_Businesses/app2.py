@@ -137,7 +137,7 @@ with col_profit:
     if pct_profit >= 30:
         st.success(f"High profit gain ({pct_profit:.1f}%)")
     elif pct_profit >= 20:
-        st.info(f"🔵 Good profit gain ({pct_profit:.1f}%)")
+        st.info(f"Good profit gain ({pct_profit:.1f}%)")
     elif pct_profit > 0:
         st.warning(f"Low profit gain ({pct_profit:.1f}%)")
     else:
