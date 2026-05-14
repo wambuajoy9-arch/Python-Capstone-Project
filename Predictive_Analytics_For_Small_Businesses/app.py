@@ -62,7 +62,7 @@ def elasticity_by_category(category):
     
 # get the category data from the dataset
 
-commodity_data = data[data["commodity"] == commodity]
+commodity_data = data[data["commodity"] == selected_commodity]
 category= data[data["commodity"]== selected_commodity]["category"].iloc[0]
 current_elasticity = elasticity_by_category(category)
     
