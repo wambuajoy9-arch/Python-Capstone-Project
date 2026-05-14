@@ -1,7 +1,7 @@
 import pandas as pd 
 import streamlit as st
 # Load the data
-data = pd.read_csv("Cleaned_Data.csv")
+data = pd.read_csv("Predictive_Analytics_For_Small_Businesses/Cleaned_Data.csv")
 data["date"] = pd.to_datetime(data["date"], errors="coerce")
 data = data.dropna(subset=["date"])
 # Extract Year
