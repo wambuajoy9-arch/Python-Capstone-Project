@@ -15,9 +15,9 @@ average_price_per_year = data.groupby(["Year","commodity"])["price"].mean().rese
 # Filter one commodity, predictictions are usually done per commodity
 # Show the available commodities
 commodity = average_price_per_year['commodity'].unique()
-selected_commodity = st.sidebar.selectbox("Select Commodity", commodities)
+selected_commodity = st.sidebar.selectbox("Select Commodity", commodity)
 #Filter the data of the selected commodity
-data = average_price_per_year[average_price_per_year["commodity"] == selected_commodity]
+filtered_data = average_price_per_year[average_price_per_year["commodity"] == selected_commodity]
 # Calculating the Growth Rate
 data["GrowthRate"] = data["price"].pct_change()
 average_growth = data["GrowthRate"].mean()
@@ -26,10 +26,10 @@ average_growth = data["GrowthRate"].mean()
 # The user inputs the year they'd like to predict the price
 Year = st.sidebar.number_input("Enter the year to predict",min_value=2027, max_value=2040, value=2027)
 # Get the data of the last year before predicted year
-Last_Year = data["Year"].iloc[-1]
+Last_Year = filtered_data["Year"].iloc[-1]
 # .iloc[-1] gets the data of the latest year in the year column
 # Get the latest price in the price column
-Latest_Price = data["price"].iloc[-1]
+Latest_Price = filtered_data["price"].iloc[-1]
 # Calculate years into the future(ahead)
 Year_ahead = Year - Last_Year
 # Get the future price
@@ -61,7 +61,9 @@ def elasticity_by_category(category):
         return -0.8 # this is a default value
     
 # get the category data from the dataset
-category = data[data["commodity"]== selected_commodity]["category"].iloc[0]
+
+commodity_data = data[data["commodity"] == commodity]
+category= data[data["commodity"]== selected_commodity]["category"].iloc[0]
 current_elasticity = elasticity_by_category(category)
     
 # Getting the Demnad Index(this is a measure used to track how the demand of a product changes over time compared to a fixed starting point)
