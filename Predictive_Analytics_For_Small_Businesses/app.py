@@ -84,15 +84,15 @@ else:
 # Predicting Profit
 # Predicting profit
 Cost_price = st.sidebar.number_input(f"Enter buying price for {selected_commodity}", value=float(Latest_Price))
-Predicted_Profit = (Future_Price - Cost_price)/Future_Price
-Percentage_Profit = Predicted_Profit*100
+Predicted_Profit = Future_Price - Cost_price
+Percentage_Profit = (Predicted_Profit/Cost_price)*100
 st.subheader("Profit Prediction")
 st.write(f"Predicted Profit: {Predicted_Profit:.2f}")
-st.write(f"Profit Percentage: {Percentage_profit:.2f}%")
+st.write(f"Profit Percentage: {Percentage_Profit:.2f}%")
 
-if Percentage_profit >= 30:
+if Predicted_Profit >= 30:
     st.success("High profit gain")
-elif Percentage_profit >= 20:
+elif Percentage_Profit >= 20:
     st.info("Good profit gain")
 else:
     st.warning("Low profit gain")
@@ -108,7 +108,7 @@ Restock_threshold = st.sidebar.number_input("Restock Threshold", min_value=0, va
 st.divider()
 if Current_stock < Restock_threshold:
     st.error(" Status: Time to Restock!")
-    if Percentage_profit >= 20 and Demand_Index >= 90:
+    if Percentage_Profit >= 20 and Demand_Index >= 90:
         st.success(" RESTOCK DECISION: APPROVED (Market conditions are favorable)")
     else:
         st.warning(" RESTOCK DECISION: DENIED (Low margins or demand)")
