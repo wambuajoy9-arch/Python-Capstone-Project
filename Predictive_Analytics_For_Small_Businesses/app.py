@@ -8,7 +8,9 @@ data = data.dropna(subset=["date"])
 data["Year"] = data["date"].dt.year
 st.title("Commodity Price Predictor")
 st.markdown("Upload the cleaned dataset to predict future prices, demand and restocking needs")
+# Displays title and description on the app
 st.sidebar.header("User Inputs")
+# This creates a sidebar section for user inputs
 # Calculate the average price per Year 
 average_price_per_year = data.groupby(["Year","commodity"])["price"].mean().reset_index()
 
@@ -35,8 +37,8 @@ Year_ahead = Year - Last_Year
 # Get the future price
 Future_Price = Latest_Price*(1+average_growth)**Year_ahead
 
-
-print("Future_Price:",Future_Price)
+st.subheader("Future Price Prediction")
+st.write(f"Predicted Price for {selected_commodity} in {Year}: {Future_Price:.2f}")
 
 
 
@@ -71,26 +73,29 @@ price_change_percentage = ((Future_Price-Latest_Price)/Latest_Price)*100
 print("Price_Change_percentage:",price_change_percentage)
 # Using 100 as my baseline to represent the current market equilibrium
 Demand_Index = 100*(1+(current_elasticity*price_change_percentage))
-print("Demand_Index:",Demand_Index)
-if Demand_Index>= 100:
-    print("The demand for the commodity is high,Increase the stock levels to make more sales")
-elif 90<= Demand_Index< 100:
-    print("The demand for the commodity is stable,Ensure the stock level is enough")
+st.subheader("Demand Prediction")
+st.write(f"Demand Index: {Demand_Index:.2f}")
+if Demand_Index >= 100:
+    st.success("High demand → Increase stock levels")
+elif 90 <= Demand_Index < 100:
+    st.info("Stable demand → Maintain stock levels")
 else:
-    print("The demand is low,do not but more stock")
+    st.warning("Low demand → Reduce stock")
 # Predicting Profit
 # Predicting profit
 Cost_price = st.sidebar.number_input(f"Enter buying price for {selected_commodity}", value=float(Latest_Price))
-Predicted_Profit = Future_Price - Cost_price
-print("Predicted_Profit:",Predicted_Profit)
-Percentage_profit = (Predicted_Profit/Cost_price)*100
-print("Percentage_profit:",Percentage_profit)
-if Percentage_profit>= 30:
-    print("the profit gain is high")
-elif Percentage_profit>= 20:
-    print("The profit gain is good")
+Predicted_Profit = (Future_Price - Cost_price)/Future_Price
+Percentage_Profit = Predicted_Profit*100
+st.subheader("Profit Prediction")
+st.write(f"Predicted Profit: {Predicted_Profit:.2f}")
+st.write(f"Profit Percentage: {Percentage_profit:.2f}%")
+
+if Percentage_profit >= 30:
+    st.success("High profit gain")
+elif Percentage_profit >= 20:
+    st.info("Good profit gain")
 else:
-    print("low profit gain")
+    st.warning("Low profit gain")
 
 # Restock Alert System 
 # The Restock alert system
